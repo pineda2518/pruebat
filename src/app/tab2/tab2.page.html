@@ -1,17 +1,52 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 2
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+ <ion-header >
     <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
+      <h1>Buscar</h1>
+      <ion-searchbar
+  show-cancel-button="always"
+  animated=""
+  placeholder="Buscar personaje"
+  debounce="500"
+  [value]="TextoBuscar"
+  (ionChange)="buscar($event)"
+></ion-searchbar>
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+
+<ion-content>
+  <ion-grid fixed *ngIf="buscando">
+    <ion-row>
+      <ion-col class="ion-text-center">
+        <ion-spinner name="bubbles"></ion-spinner>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-list-header>
+    <ion-label>Sujerencias</ion-label>
+  </ion-list-header>
+
+  <ion-list *ngIf="Per.length===0">
+    <ion-item *ngFor="let idea of ideas"
+              (click)="TextoBuscar = idea">
+      <ion-label color="primary">{{idea}}</ion-label>
+    </ion-item>
+
+    <ion-grid fixed>
+      <ion-row>
+        <ion-col size="6" *ngFor="let personaje of Per">
+
+          <ion-card>
+            <img [src]="personaje.images">
+            <ion-card-header>
+              <ion-card-subtitle>{{personaje.series}}</ion-card-subtitle>
+              <ion-card-title>{{personaje.title}}</ion-card-title>
+            </ion-card-header>
+          </ion-card>
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  
+  </ion-list>
 </ion-content>
